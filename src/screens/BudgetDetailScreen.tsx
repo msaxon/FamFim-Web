@@ -216,6 +216,14 @@ export const BudgetDetailScreen: React.FC = () => {
     }
   };
 
+  // Sort transactions by date descending
+  const sortedTransactions = [...budget.transactions].sort((a, b) => {
+    const dateA = parseDate(a.dateTime);
+    const dateB = parseDate(b.dateTime);
+    if (!dateA || !dateB) return 0;
+    return dateB.getTime() - dateA.getTime();
+  });
+
   return (
     <div style={{ padding: '16px', maxWidth: '600px', margin: '0 auto', paddingBottom: '80px' }}>
       <button
@@ -265,12 +273,12 @@ export const BudgetDetailScreen: React.FC = () => {
 
       <h2 style={{ fontSize: '18px', marginBottom: '16px', paddingLeft: '8px' }}>Transactions (Current Period)</h2>
       <div style={{ backgroundColor: 'white', borderRadius: '12px', overflow: 'hidden', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', marginBottom: '24px' }}>
-        {budget.transactions.length === 0 ? (
+        {sortedTransactions.length === 0 ? (
           <div style={{ padding: '20px', textAlign: 'center', color: '#888' }}>No transactions found</div>
         ) : (
           <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-            {budget.transactions.map((t, index) => (
-              <li key={index} style={{ borderBottom: index < budget.transactions.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
+            {sortedTransactions.map((t, index) => (
+              <li key={index} style={{ borderBottom: index < sortedTransactions.length - 1 ? '1px solid #f0f0f0' : 'none' }}>
                 <button 
                   onClick={() => handleTransactionClick(t)}
                   style={{ 
