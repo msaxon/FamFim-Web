@@ -8,7 +8,7 @@ export class AuthManager {
   static async signOut() {
     clearAccessToken();
     // You might want to revoke the token here as well using google.accounts.oauth2.revoke
-    window.location.href = '/login';
+    window.location.href = '#/login';
   }
 
   static async isSignedIn(): Promise<boolean> {
@@ -35,7 +35,7 @@ export async function authenticatedFetch(
 
   if (response.status === 401) {
     clearAccessToken();
-    window.location.href = '/login';
+    window.location.href = '#/login';
     throw new Error('Session expired. Please log in again.');
   }
 
