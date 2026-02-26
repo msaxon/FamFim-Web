@@ -21,7 +21,7 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to="#/login" replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <DataProvider>{children}</DataProvider>;
