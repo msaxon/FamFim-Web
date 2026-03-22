@@ -45,6 +45,7 @@ export const BudgetsScreen: React.FC = () => {
           const spendPercentage = (budget.currentValue / budget.limit) * 100;
           const timePercentage = calculateTimeProgress(budget.timeWindow, budget.startsOn);
           const isOverBudget = budget.currentValue > budget.limit;
+          const remaining = Math.max(0, budget.limit - budget.currentValue);
 
           return (
             <button 
@@ -77,9 +78,9 @@ export const BudgetsScreen: React.FC = () => {
 
               <div style={{ marginBottom: '16px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '4px', fontSize: '14px' }}>
-                  <span style={{ color: '#666' }}>Spent</span>
+                  <span style={{ color: '#666' }}>Remaining</span>
                   <span style={{ fontWeight: '500', color: isOverBudget ? '#d32f2f' : '#2e7d32' }}>
-                    ${budget.currentValue.toFixed(2)} / ${budget.limit}
+                    ${remaining.toFixed(2)} left / ${budget.limit}
                   </span>
                 </div>
                 <div style={{ height: '8px', backgroundColor: '#f0f0f0', borderRadius: '4px', overflow: 'hidden' }}>
