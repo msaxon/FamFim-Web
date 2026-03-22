@@ -166,7 +166,9 @@ export const BudgetDetailScreen: React.FC = () => {
         fill: true,
         backgroundColor: 'rgba(75,192,192,0.2)',
         borderColor: 'rgba(75,192,192,1)',
-        tension: 0.4
+        tension: 0.4,
+        pointRadius: 4, // Increase point radius for easier tapping
+        pointHitRadius: 20, // Increase hit area for points
       },
       {
         label: 'Budget Limit',
@@ -181,6 +183,10 @@ export const BudgetDetailScreen: React.FC = () => {
 
   const chartOptions = {
     responsive: true,
+    interaction: {
+      mode: 'index' as const, // 'index' shows tooltip for all datasets at that index
+      intersect: false, // Don't require exact point intersection
+    },
     plugins: {
       legend: {
         position: 'top' as const,
