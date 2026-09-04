@@ -5,7 +5,7 @@ import { TransactionRow } from './transaction.types';
 export interface Budget {
   name: string;
   id: string;
-  timeWindow: 'weekly' | 'monthly';
+  timeWindow: 'weekly' | 'monthly' | 'yearly';
   startsOn?: 'monday' | 'sunday';
   limit: number;
   category: string;
@@ -18,7 +18,7 @@ export interface FilledBudget extends Budget {
 
 export interface BudgetFormData {
   name: string;
-  timeWindow: 'weekly' | 'monthly';
+  timeWindow: 'weekly' | 'monthly' | 'yearly';
   startsOn: 'monday' | 'sunday';
   limit: string; // String for form input, converted to number
   category: string;
@@ -26,7 +26,7 @@ export interface BudgetFormData {
 
 export interface CreateBudgetParams {
   name: string;
-  timeWindow: 'weekly' | 'monthly';
+  timeWindow: 'weekly' | 'monthly' | 'yearly';
   startsOn?: 'monday' | 'sunday';
   limit: number;
   category: string;

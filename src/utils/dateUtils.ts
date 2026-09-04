@@ -23,7 +23,7 @@ export const parseDate = (dateString: string): Date | null => {
   return isNaN(date.getTime()) ? null : date;
 };
 
-export const isTransactionInPeriod = (transactionDate: Date, timeWindow: 'weekly' | 'monthly', startsOn?: 'monday' | 'sunday') => {
+export const isTransactionInPeriod = (transactionDate: Date, timeWindow: 'weekly' | 'monthly' | 'yearly', startsOn?: 'monday' | 'sunday') => {
   const now = new Date();
   let start: Date;
   let end: Date;
@@ -42,17 +42,22 @@ export const isTransactionInPeriod = (transactionDate: Date, timeWindow: 'weekly
     
     end = new Date(start);
     end.setDate(start.getDate() + 7);
-  } else {
+  } else if(timeWindow === 'monthly') {
     start = new Date(now.getFullYear(), now.getMonth(), 1);
     start.setHours(0, 0, 0, 0);
     end = new Date(now.getFullYear(), now.getMonth() + 1, 1); // First day of next month
     end.setHours(0, 0, 0, 0);
+  } else {
+    start = new Date(now.getFullYear(), 1, 1);
+    start.setHours(0, 0, 0, 0);
+    end = new Date(now.getFullYear(), 12, 31);
+    end.setHours(23, 59, 59, 999);
   }
 
   return checkDate.getTime() >= start.getTime() && checkDate.getTime() < end.getTime();
 };
 
-export const calculateTimeProgress = (timeWindow: 'weekly' | 'monthly', startsOn?: 'monday' | 'sunday') => {
+export const calculateTimeProgress = (timeWindow: 'weekly' | 'monthly' | 'yearly', startsOn?: 'monday' | 'sunday') => {
   const now = new Date();
   let start: Date;
   let end: Date;
@@ -66,9 +71,12 @@ export const calculateTimeProgress = (timeWindow: 'weekly' | 'monthly', startsOn
     
     end = new Date(start);
     end.setDate(start.getDate() + 7);
-  } else {
+  } else if(timeWindow === 'monthly') {
     start = new Date(now.getFullYear(), now.getMonth(), 1);
     end = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+  } else {
+    start = new Date(now.getFullYear(), 1, 1);
+    end = new Date(now.getFullYear(), 12, 31);
   }
   
   const total = end.getTime() - start.getTime();

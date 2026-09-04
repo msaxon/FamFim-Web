@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BudgetSheetService } from '../services/drive/budgetSheetService';
-import { CreateBudgetParams } from '../types/budget.types';
+import { CreateBudgetParams } from '../types';
 
 export const CreateBudgetScreen: React.FC = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [limit, setLimit] = useState('');
   const [category, setCategory] = useState('');
-  const [timeWindow, setTimeWindow] = useState<'weekly' | 'monthly'>('monthly');
+  const [timeWindow, setTimeWindow] = useState<'weekly' | 'monthly' | 'yearly'>('monthly');
   const [startsOn, setStartsOn] = useState<'monday' | 'sunday'>('sunday');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -60,11 +60,12 @@ export const CreateBudgetScreen: React.FC = () => {
         />
         <select 
           value={timeWindow} 
-          onChange={(e) => setTimeWindow(e.target.value as 'weekly' | 'monthly')}
+          onChange={(e) => setTimeWindow(e.target.value as 'weekly' | 'monthly' | 'yearly')}
           style={{ padding: '8px' }}
         >
           <option value="monthly">Monthly</option>
           <option value="weekly">Weekly</option>
+          <option value="yearly">Yearly</option>
         </select>
         {timeWindow === 'weekly' && (
           <select 

@@ -56,6 +56,8 @@ export const BudgetDetailScreen: React.FC = () => {
   const historicalData = React.useMemo(() => {
     if (!budget) return { historicalBudgetData: [], averageSpent: 0, didNotExceedPercentage: 0 };
 
+    const maxTimePeriods = 8;
+
     const historicalBudgetData: { period: string; spent: number; date: Date }[] = [];
     let totalSpent = 0;
     let exceededCount = 0;
@@ -63,7 +65,7 @@ export const BudgetDetailScreen: React.FC = () => {
 
     // Filter transactions for this budget category
     const budgetTransactions = transactions.filter(t => 
-      (t.category || '').trim().toLowerCase() === (budget.category || '').trim().toLowerCase()
+      (t.category || '').trim().toLowerCase() === (budget.category || '').trim().toLowerCase() && parseDate(t.dateTime ?? '') < new Date()
     );
 
     // Find the latest transaction date to start iterating backwards from
@@ -90,7 +92,9 @@ export const BudgetDetailScreen: React.FC = () => {
     }
 
     // Iterate backwards by period until we reach earliestDate
-    while (currentPeriodStart >= earliestDate) {
+    let maxPeriodCounter = 0;
+    while (currentPeriodStart >= earliestDate && maxPeriodCounter <= maxTimePeriods) {
+        maxPeriodCounter++;
         let periodEnd: Date;
         let periodLabel: string;
 
