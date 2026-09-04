@@ -132,7 +132,7 @@ export const TransactionsScreen: React.FC = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <h3 style={{ marginTop: 0, marginBottom: '16px', textAlign: 'center' }}>Select a Category</h3>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', maxHeight: '600px', 'overflowY': 'auto' }}>
               {[...categories, 'Other'].map(cat => (
                 <button 
                   key={cat}
