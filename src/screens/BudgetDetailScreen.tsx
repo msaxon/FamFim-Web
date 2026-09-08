@@ -65,7 +65,7 @@ export const BudgetDetailScreen: React.FC = () => {
 
     // Filter transactions for this budget category
     const budgetTransactions = transactions.filter(t => 
-      (t.category || '').trim().toLowerCase() === (budget.category || '').trim().toLowerCase() && parseDate(t.dateTime ?? '') < new Date()
+      (t.category || '').trim().toLowerCase() === (budget.category || '').trim().toLowerCase() && (parseDate(t.dateTime) ?? new Date()) < new Date()
     );
 
     // Find the latest transaction date to start iterating backwards from
